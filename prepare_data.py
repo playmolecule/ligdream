@@ -4,6 +4,7 @@
 import argparse
 import numpy as np
 from tqdm import tqdm
+from rdkit import Chem
 
 parser = argparse.ArgumentParser()
 
@@ -32,8 +33,18 @@ vocab_c2i_v1 = {vocab_i2c_v1[i]: i for i in vocab_i2c_v1}
 
 
 for i, sstring in enumerate(tqdm(smiles)):
+    mol = Chem.MolFromSmiles(sstring)
+    if not mol:
+        raise ValueError("Failed to parse molecule '{}'".format(mol))
+
+    sstring = Chem.MolToSmiles(mol)  # Make the SMILES canonical.
     sstring = sstring.replace("Cl", "X").replace("[nH]", "Y").replace("Br", "Z")
-    vals = [1] + [vocab_c2i_v1[xchar] for xchar in sstring] + [2]
+    try:
+        vals = [1] + [vocab_c2i_v1[xchar] for xchar in sstring] + [2]
+    except KeyError:
+        raise ValueError(("Unkown SMILES tokens: {} in string '{}'."
+                          .format(", ".join([x for x in sstring if x not in vocab_c2i_v1]),
+                                                                      sstring)))
     strings[i, :len(vals)] = vals
 
 np.save(np_save_path, strings)
