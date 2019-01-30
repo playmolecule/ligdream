@@ -191,8 +191,10 @@ def gather_fn(in_data):
 
 
 class Batch_prep:
-    def __init__(self, n_proc=6):
-        if n_proc > 1:
+    def __init__(self, n_proc=6, mp_pool=None):
+        if mp_pool:
+            self.mp = mp_pool
+        elif n_proc > 1:
             self.mp = multiprocessing.Pool(n_proc)
         else:
             raise NotImplementedError("Use multiprocessing for now!")
@@ -205,14 +207,14 @@ class Batch_prep:
         return gather_fn(inputs)
 
 
-def queue_datagen(smiles, batch_size=128, n_proc=12):
+def queue_datagen(smiles, batch_size=128, n_proc=12, mp_pool=None):
     """
     Continuously produce representations.
     """
     n_batches = math.ceil(len(smiles) / batch_size)
     sh_indencies = np.arange(len(smiles))
 
-    my_batch_prep = Batch_prep(n_proc=n_proc)
+    my_batch_prep = Batch_prep(n_proc=n_proc, mp_pool=mp_pool)
 
     while True:
         np.random.shuffle(sh_indencies)

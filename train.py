@@ -2,6 +2,7 @@
 # Copying and distribution is allowed under AGPLv3 license
 
 import os
+import sys
 import torch
 import torch.nn as nn
 from torch.nn.utils.rnn import pack_padded_sequence
@@ -27,7 +28,9 @@ savedir = args["output_dir"]
 os.makedirs(savedir, exist_ok=True)
 smiles = np.load(args["input"])
 
-my_gen = queue_datagen(smiles, batch_size=batch_size)
+import multiprocessing
+multiproc = multiprocessing.Pool(6)
+my_gen = queue_datagen(smiles, batch_size=batch_size, mp_pool=multiproc)
 mg = GeneratorEnqueuer(my_gen, seed=0)
 mg.start()
 mt_gen = mg.get()
@@ -129,3 +132,8 @@ for i, (mol_batch, caption, lengths) in tq_gen:
         # We are Done!
         log_file.close()
         break
+
+# Cleanup
+del tq_gen
+mt_gen.close()
+multiproc.close()

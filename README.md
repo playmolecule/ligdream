@@ -10,6 +10,7 @@ First construct a set of training molecules:
 ```
 $ python prepare_data.py -i "./path/to/my/smiles.smi" -o "./path/to/my/smiles.npy"  
 ```
+Example training SMILES can be downloaded [here](http://pub.htmd.org/zinc15_druglike_clean_canonical_max60.zip).
 
 Secondly, execute the training of a model:
 
@@ -17,7 +18,7 @@ Secondly, execute the training of a model:
 $ python train.py -i "./path/to/my/smiles.npy" -o "./path/to/models"  
 ```
 
-## Generation 
+## Generation
 
 
 Web based compund generation is available at [https://playmolecule.org/LigDream/](https://playmolecule.org/LigDream/).
