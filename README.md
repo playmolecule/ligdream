@@ -1,5 +1,19 @@
 # LigDream: Shape-Based Compound Generation
 
+### Citing
+
+If you are using content of the repository please consider citing the follow work:
+
+```
+@article{skalic2019shape,
+  title={Shape-Based Generative Modeling for de-novo Drug Design},
+  author={Skalic, Miha and Jim{\'e}nez Luna, Jos{\'e} and Sabbadin, Davide and De Fabritiis, Gianni},
+  journal={Journal of chemical information and modeling},
+  doi = {10.1021/acs.jcim.8b00263},
+  publisher={ACS Publications}
+}
+```
+
 ### Requirements
 
 
