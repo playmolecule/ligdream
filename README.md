@@ -1,5 +1,7 @@
 # LigDream: Shape-Based Compound Generation
 
+THIS PROJECT IS NOT LONGER ACTIVE. IT IS MADE AVAILABLE WITHOUT ANY SUPPORT.
+
 ### Citing
 
 If you are using content of the repository please consider citing the follow work:
